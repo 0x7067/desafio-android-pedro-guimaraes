@@ -1,4 +1,4 @@
-package com.example.marveldex.ui.features
+package com.example.marveldex.ui.features.listcharacteres
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -12,7 +12,8 @@ import com.example.marveldex.R
 class ListCharacters : Fragment() {
 
     companion object {
-        fun newInstance() = ListCharacters()
+        fun newInstance() =
+            ListCharacters()
     }
 
     private lateinit var viewModel: ListCharactersViewModel
@@ -27,7 +28,6 @@ class ListCharacters : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ListCharactersViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

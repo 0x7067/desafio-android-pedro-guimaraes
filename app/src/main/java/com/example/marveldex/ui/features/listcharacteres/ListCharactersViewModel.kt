@@ -1,4 +1,4 @@
-package com.example.marveldex.ui.features
+package com.example.marveldex.ui.features.listcharacteres
 
 import androidx.lifecycle.ViewModel
 
