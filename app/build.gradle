@@ -19,6 +19,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "PUBLIC_KEY", "\"062617f85e7154abeb8b313fa940d3a4\""
+            buildConfigField "String", "PRIVATE_KEY", "\"42d5f4e02c903e46c2ce90e3684196b25b56aeb7\""
+        }
+        debug {
+            buildConfigField "String", "PUBLIC_KEY", "\"062617f85e7154abeb8b313fa940d3a4\""
+            buildConfigField "String", "PRIVATE_KEY", "\"42d5f4e02c903e46c2ce90e3684196b25b56aeb7\""
         }
     }
 }
@@ -43,4 +49,5 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.4.0"
 }
