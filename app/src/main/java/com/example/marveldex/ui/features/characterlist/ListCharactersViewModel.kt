@@ -2,7 +2,7 @@ package com.example.marveldex.ui.features.characterlist
 
 import androidx.lifecycle.ViewModel
 import com.example.marveldex.api.MarvelClient
-import com.example.marveldex.data.MarvelHero
+import com.example.marveldex.data.heroes.MarvelHero
 
 class ListCharactersViewModel() : ViewModel() {
 
