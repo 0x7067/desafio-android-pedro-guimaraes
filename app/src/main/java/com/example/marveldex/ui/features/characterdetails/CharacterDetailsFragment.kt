@@ -39,9 +39,15 @@ class CharacterDetailsFragment : Fragment(), CoroutineScope by MainScope() {
 
         launch {
             val comics = viewModel.fetchHeroComics(args.heroID)
-            adapter = CharacterDetailsAdapter(comics)
-            characterDetailsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            characterDetailsRecyclerView.adapter = adapter
+
+            if (comics.isNotEmpty()) {
+                adapter = CharacterDetailsAdapter(comics)
+                characterDetailsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                characterDetailsRecyclerView.adapter = adapter
+
+            } else {
+                emptyTextView.visibility = View.VISIBLE
+            }
             indeterminateBar.visibility = View.GONE
         }
     }
