@@ -33,7 +33,6 @@ class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, priva
     }
 
     fun setHeroesList(heroList: List<MarvelHero>) {
-        this.heroList.clear()
         this.heroList.addAll(heroList)
         notifyDataSetChanged()
     }

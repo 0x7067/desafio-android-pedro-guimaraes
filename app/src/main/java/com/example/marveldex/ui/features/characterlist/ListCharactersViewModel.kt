@@ -6,8 +6,8 @@ import com.example.marveldex.data.MarvelHero
 
 class ListCharactersViewModel() : ViewModel() {
 
-    suspend fun fetchMarvelHeroes() : List<MarvelHero> {
-        val heroes = MarvelClient.getMarvelHeroes(20, 0)
+    suspend fun fetchMarvelHeroes(offset: Int) : List<MarvelHero> {
+        val heroes = MarvelClient.getMarvelHeroes(20, offset)
         return heroes.heroData.results
     }
 }
