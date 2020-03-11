@@ -27,6 +27,12 @@
         <argument
             android:name="heroID"
             app:argType="integer" />
+        <argument
+            android:name="heroName"
+            app:argType="string" />
+        <argument
+            android:name="heroImageURL"
+            app:argType="string" />
     </fragment>
 
 </navigation>
