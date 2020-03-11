@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marveldex.R
+import com.example.marveldex.ui.features.characterlist.ListCharactersFragmentDirections.actionListCharactersFragmentToCharacterDetailsFragment
 import com.example.marveldex.util.recyclerView.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.list_characters_fragment.*
 import kotlinx.coroutines.CoroutineScope
@@ -34,12 +37,17 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ListCharactersViewModel::class.java)
-        adapter = ListCharactersAdapter(mutableListOf()) {Toast.makeText(requireContext(), "oi", Toast.LENGTH_LONG).show() }
+        adapter = ListCharactersAdapter(mutableListOf(), this::goToCharacterDetail)
 
         val linearLayoutManager = LinearLayoutManager(requireContext())
 
         loadInitialHeroes(linearLayoutManager)
         addScrollListener(linearLayoutManager)
+    }
+
+    private fun goToCharacterDetail(heroId: Int) {
+        val directions = actionListCharactersFragmentToCharacterDetailsFragment(heroId)
+        findNavController().navigate(directions)
     }
 
     private fun loadInitialHeroes(linearLayoutManager: LinearLayoutManager) {
@@ -48,6 +56,7 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
             charactersRecyclerView.layoutManager = linearLayoutManager
             charactersRecyclerView.adapter = adapter
             adapter.setHeroesList(heroes)
+            indeterminateBar.visibility = View.GONE
         }
     }
 

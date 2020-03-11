@@ -10,7 +10,7 @@ import com.example.marveldex.data.heroes.MarvelHero
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_character.view.*
 
-class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, private val onHeroClicked: () -> Unit) : RecyclerView.Adapter<ListCharactersAdapter.ItemViewHolder>() {
+class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, private val itemClick: (Int) -> Unit) : RecyclerView.Adapter<ListCharactersAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -29,7 +29,9 @@ class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, priva
 
         holder.itemView.characterImage.load(heroUrl)
 
-        holder.itemView.setOnClickListener { onHeroClicked() }
+        holder.itemView.setOnClickListener {
+            itemClick(hero.id)
+        }
     }
 
     fun setHeroesList(heroList: List<MarvelHero>) {
