@@ -1,9 +1,11 @@
 package com.example.marveldex.api
 
+import com.example.marveldex.data.comics.MarvelComicsResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -33,5 +35,8 @@ object MarvelClient {
             .writeTimeout(60L, TimeUnit.SECONDS)
             .build()
 
-    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) = getMarvelApi(getRetrofit()).getMarvelHeroes(limit, offset)
+    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) =
+        getMarvelApi(getRetrofit()).getMarvelHeroes(limit, offset)
+
+    suspend fun getComicsByHeroId(characterId: Int) = getMarvelApi(getRetrofit()).getComicsByHero(characterId)
 }
