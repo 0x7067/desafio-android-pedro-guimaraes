@@ -1,5 +1,6 @@
-package com.example.marveldex.data
+package com.example.marveldex.data.heroes
 
+import com.example.marveldex.data.heroes.MarvelHero
 import com.google.gson.annotations.SerializedName
 
 data class MarvelHeroData(
