@@ -2,6 +2,7 @@ package com.example.marveldex.api
 
 import com.example.marveldex.data.comics.MarvelComicsResponse
 import com.example.marveldex.data.heroes.MarvelHeroResponse
+import com.example.marveldex.data.network.Resource
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

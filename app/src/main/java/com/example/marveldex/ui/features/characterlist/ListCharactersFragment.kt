@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marveldex.R
+import com.example.marveldex.data.heroes.MarvelHero
+import com.example.marveldex.data.network.Status
 import com.example.marveldex.ui.features.characterlist.ListCharactersFragmentDirections.actionListCharactersFragmentToCharacterDetailsFragment
 import com.example.marveldex.util.recyclerView.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.list_characters_fragment.*
@@ -44,18 +47,34 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
     }
 
     private fun goToCharacterDetail(heroId: Int, heroName: String, heroImageURL: String) {
-        val directions = actionListCharactersFragmentToCharacterDetailsFragment(heroId, heroName, heroImageURL)
+        val directions =
+            actionListCharactersFragmentToCharacterDetailsFragment(heroId, heroName, heroImageURL)
         findNavController().navigate(directions)
     }
 
     private fun loadInitialHeroes(linearLayoutManager: LinearLayoutManager) {
         launch {
-            val heroes = viewModel.fetchMarvelHeroes(0)
-            charactersRecyclerView.layoutManager = linearLayoutManager
-            charactersRecyclerView.adapter = adapter
-            adapter.setHeroesList(heroes)
+            val heroesResource = viewModel.fetchMarvelHeroes(0)
+            when (heroesResource.status) {
+                Status.SUCCESS -> {
+                    val heroes = heroesResource.data!!.heroData.results
+                    renderCharacterList(linearLayoutManager, heroes)
+                }
+                Status.ERROR -> {
+                    Toast.makeText(requireContext(), heroesResource.message, Toast.LENGTH_LONG).show()
+                }
+            }
             indeterminateBar.visibility = View.GONE
         }
+    }
+
+    private fun renderCharacterList(
+        linearLayoutManager: LinearLayoutManager,
+        heroes: List<MarvelHero>
+    ) {
+        charactersRecyclerView.layoutManager = linearLayoutManager
+        charactersRecyclerView.adapter = adapter
+        adapter.setHeroesList(heroes)
     }
 
     private fun addScrollListener(linearLayoutManager: LinearLayoutManager) {
@@ -74,10 +93,19 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
     }
 
     private suspend fun loadMoreHeroes() {
-        val heroes = viewModel.fetchMarvelHeroes(offset)
-        adapter.setHeroesList(heroes)
-        offset += 20
+        val heroesResource = viewModel.fetchMarvelHeroes(offset)
+        when (heroesResource.status) {
+            Status.SUCCESS -> {
+                val heroes = heroesResource.data!!.heroData.results
+                adapter.setHeroesList(heroes)
+                offset += 20
+            }
+            Status.ERROR -> {
+                Toast.makeText(requireContext(), heroesResource.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         cancel()
