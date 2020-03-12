@@ -29,7 +29,7 @@ class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, priva
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val hero = heroList[position]
         holder.itemView.characterName.text = hero.name
-        val heroUrl = hero.thumbnail.path.replace("http", "https") + "." + hero.thumbnail.extension
+        val heroUrl = hero.thumbnail.getUrl()
 
         holder.itemView.characterImage.load(heroUrl)
 

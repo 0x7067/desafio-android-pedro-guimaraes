@@ -34,9 +34,8 @@ class CharacterDetailsAdapter(private val comics: List<MarvelComics>): RecyclerV
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val comic = comics[position]
-        val comicImageUrl = comic.thumbnail.path.replace("http", "https") + "." + comic.thumbnail.extension
         holder.itemView.comicTitle.text = comic.title
         holder.itemView.comicDescription.text = comic.description
-        holder.itemView.comicImage.load(comicImageUrl)
+        holder.itemView.comicImage.load(comic.thumbnail.getUrl())
     }
 }
