@@ -9,11 +9,14 @@ import com.example.marveldex.data.network.ResponseHandler
 
 class CharacterDetailsViewModel() : ViewModel() {
 
+    lateinit var responseHandler: ResponseHandler
+    lateinit var marvelClient: MarvelClient
+
     suspend fun fetchHeroComics(heroID: Int): Resource<MarvelComicsResponse> {
         return try {
-            ResponseHandler.handleSuccess(MarvelClient.getComicsByHeroId(heroID))
+            responseHandler.handleSuccess(marvelClient.getComicsByHeroId(heroID))
         } catch (e: Exception) {
-            ResponseHandler.handleException(e)
+            responseHandler.handleException(e)
         }
     }
 }

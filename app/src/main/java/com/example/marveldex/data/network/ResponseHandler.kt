@@ -2,12 +2,17 @@ package com.example.marveldex.data.network
 
 import retrofit2.HttpException
 
-object ResponseHandler {
-    fun <T : Any> handleSuccess(data: T): Resource<T> {
+interface ResponseHandler {
+    fun <T : Any> handleSuccess(data: T): Resource<T>
+    fun <T : Any> handleException(e: Exception): Resource<T>
+}
+
+object ResponseHandlerImpl : ResponseHandler {
+    override fun <T : Any> handleSuccess(data: T): Resource<T> {
         return Resource.success(data)
     }
 
-    fun <T : Any> handleException(e: Exception): Resource<T> {
+    override fun <T : Any> handleException(e: Exception): Resource<T> {
         return when (e) {
             is HttpException -> Resource.error(getErrorMessage(e.code()), null)
             else -> Resource.error(getErrorMessage(Int.MAX_VALUE), null)

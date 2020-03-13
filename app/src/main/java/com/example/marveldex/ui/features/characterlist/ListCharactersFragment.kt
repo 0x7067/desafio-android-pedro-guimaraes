@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marveldex.R
+import com.example.marveldex.api.MarvelClientImpl
 import com.example.marveldex.data.heroes.MarvelHero
+import com.example.marveldex.data.network.ResponseHandlerImpl
 import com.example.marveldex.data.network.Status
 import com.example.marveldex.ui.features.characterlist.ListCharactersFragmentDirections.actionListCharactersFragmentToCharacterDetailsFragment
 import com.example.marveldex.util.recyclerView.EndlessRecyclerViewScrollListener
@@ -38,6 +40,9 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ListCharactersViewModel::class.java)
+        viewModel.marvelClient = MarvelClientImpl
+        viewModel.responseHandler = ResponseHandlerImpl
+
         adapter = ListCharactersAdapter(mutableListOf(), this::goToCharacterDetail)
 
         val linearLayoutManager = LinearLayoutManager(requireContext())

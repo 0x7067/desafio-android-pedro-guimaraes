@@ -1,15 +1,21 @@
 package com.example.marveldex.api
 
 import com.example.marveldex.data.comics.MarvelComicsResponse
+import com.example.marveldex.data.heroes.MarvelHeroResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
-object MarvelClient {
+interface MarvelClient {
+    @Throws(Exception::class)
+    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) : MarvelHeroResponse
+    suspend fun getComicsByHeroId(characterId: Int) : MarvelComicsResponse
+}
+
+object MarvelClientImpl : MarvelClient {
 
     private const val baseUrl = "https://gateway.marvel.com"
 
@@ -35,8 +41,8 @@ object MarvelClient {
             .writeTimeout(60L, TimeUnit.SECONDS)
             .build()
 
-    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) =
+    override suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) =
         getMarvelApi(getRetrofit()).getMarvelHeroes(limit, offset)
 
-    suspend fun getComicsByHeroId(characterId: Int) = getMarvelApi(getRetrofit()).getComicsByHero(characterId)
+    override suspend fun getComicsByHeroId(characterId: Int) = getMarvelApi(getRetrofit()).getComicsByHero(characterId)
 }

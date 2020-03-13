@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import com.example.marveldex.R
+import com.example.marveldex.api.MarvelClientImpl
 import com.example.marveldex.data.comics.MarvelComics
+import com.example.marveldex.data.network.ResponseHandlerImpl
 import com.example.marveldex.data.network.Status
 import kotlinx.android.synthetic.main.character_details_fragment.*
 import kotlinx.android.synthetic.main.item_character.*
@@ -36,6 +38,8 @@ class CharacterDetailsFragment : Fragment(), CoroutineScope by MainScope() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CharacterDetailsViewModel::class.java)
+        viewModel.marvelClient = MarvelClientImpl
+        viewModel.responseHandler = ResponseHandlerImpl
 
         renderCharacter()
 
