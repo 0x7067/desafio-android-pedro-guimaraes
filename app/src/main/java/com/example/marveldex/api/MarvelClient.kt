@@ -11,8 +11,10 @@ import java.util.concurrent.TimeUnit
 
 interface MarvelClient {
     @Throws(Exception::class)
-    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) : MarvelHeroResponse
-    suspend fun getComicsByHeroId(characterId: Int) : MarvelComicsResponse
+    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int): MarvelHeroResponse
+
+    @Throws(Exception::class)
+    suspend fun getComicsByHeroId(characterId: Int): MarvelComicsResponse
 }
 
 object MarvelClientImpl : MarvelClient {
@@ -44,5 +46,6 @@ object MarvelClientImpl : MarvelClient {
     override suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int) =
         getMarvelApi(getRetrofit()).getMarvelHeroes(limit, offset)
 
-    override suspend fun getComicsByHeroId(characterId: Int) = getMarvelApi(getRetrofit()).getComicsByHero(characterId)
+    override suspend fun getComicsByHeroId(characterId: Int) =
+        getMarvelApi(getRetrofit()).getComicsByHero(characterId)
 }
