@@ -10,5 +10,4 @@
 | Resource                  |      50%      |
 
 # Screenshots
-![Detail](./screenshots/1.png)
-![Character List](./screenshots/2.png)
+![Character List](./screenshots/1.png) ![Character Detail](./screenshots/2.png)
