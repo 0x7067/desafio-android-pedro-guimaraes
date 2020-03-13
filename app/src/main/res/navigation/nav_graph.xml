@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listCharactersFragment"
-        android:name="com.example.marveldex.ui.features.characterlist.ListCharactersFragment"
+        android:name="com.moisespedro.marveldex.ui.features.characterlist.ListCharactersFragment"
         tools:layout="@layout/list_characters_fragment">
         <action
             android:id="@+id/action_listCharactersFragment_to_characterDetailsFragment"
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/characterDetailsFragment"
-        android:name="com.example.marveldex.ui.features.characterdetails.CharacterDetailsFragment"
+        android:name="com.moisespedro.marveldex.ui.features.characterdetails.CharacterDetailsFragment"
         android:label="CharacterDetailsFragment">
         <argument
             android:name="heroID"
