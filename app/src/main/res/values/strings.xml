@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Marvel Dex</string>
     <string name="no_comic_found">Nenhum comic encontrado para esse herói</string>
+    <string name="no_description_found">Herói sem descrição</string>
 </resources>

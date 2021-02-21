@@ -4,30 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
 import com.moisespedro.marveldex.R
-import com.moisespedro.marveldex.api.MarvelClientImpl
-import com.moisespedro.marveldex.data.comics.MarvelComics
-import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
-import com.moisespedro.marveldex.data.network.Status
-import kotlinx.android.synthetic.main.character_details_fragment.*
 import kotlinx.android.synthetic.main.item_character.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharacterDetailsFragment : Fragment(), CoroutineScope by MainScope() {
+class CharacterDetailsFragment : Fragment() {
 
     private val args: CharacterDetailsFragmentArgs by navArgs()
-    private val viewModel: CharacterDetailsViewModel by viewModel()
-    private lateinit var adapter: CharacterDetailsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,43 +25,20 @@ class CharacterDetailsFragment : Fragment(), CoroutineScope by MainScope() {
         super.onActivityCreated(savedInstanceState)
 
         renderCharacter()
-
-        launch {
-            val comicsResource = viewModel.fetchHeroComics(args.heroID)
-
-            when (comicsResource.status) {
-                Status.SUCCESS -> {
-                    val comics = comicsResource.data!!.heroData.results
-                    renderComics(comics)
-                }
-                Status.ERROR -> {
-                    Toast.makeText(requireContext(), comicsResource.message, Toast.LENGTH_LONG).show()
-                }
-            }
-
-            indeterminateBar.visibility = View.GONE
-        }
     }
 
     private fun renderCharacter() {
-        characterName.text = args.heroName
-        characterImage.load(args.heroImageURL)
+        characterName.text = args.heroDetail.name
+        characterImage.load(args.heroDetail.imageUrl)
+        renderCharacterDescription()
     }
 
-    private fun renderComics(comics: List<MarvelComics>) {
-        if (comics.isNotEmpty()) {
-            adapter = CharacterDetailsAdapter(comics)
-            characterDetailsRecyclerView.layoutManager =
-                LinearLayoutManager(requireContext())
-            characterDetailsRecyclerView.adapter = adapter
-
+    private fun renderCharacterDescription() {
+        characterDescription.visibility = View.VISIBLE
+        if (args.heroDetail.description.isNotEmpty()) {
+            characterDescription.text = args.heroDetail.description
         } else {
-            emptyTextView.visibility = View.VISIBLE
+            characterDescription.text = getString(R.string.no_description_found)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cancel()
     }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moisespedro.marveldex.R
 import com.moisespedro.marveldex.data.heroes.MarvelHero
+import com.moisespedro.marveldex.data.model.HeroDetail
 import com.moisespedro.marveldex.data.network.Status
 import com.moisespedro.marveldex.ui.features.characterlist.ListCharactersFragmentDirections.actionListCharactersFragmentToCharacterDetailsFragment
 import com.moisespedro.marveldex.util.recyclerView.EndlessRecyclerViewScrollListener
@@ -47,9 +48,10 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
         addScrollListener(linearLayoutManager)
     }
 
-    private fun goToCharacterDetail(heroId: Int, heroName: String, heroImageURL: String) {
+    private fun goToCharacterDetail(heroId: Int, heroName: String, heroImageURL: String, heroDescription: String) {
+        val heroDetail = HeroDetail(heroId, heroName, heroImageURL, heroDescription)
         val directions =
-            actionListCharactersFragmentToCharacterDetailsFragment(heroId, heroName, heroImageURL)
+            actionListCharactersFragmentToCharacterDetailsFragment(heroDetail)
         findNavController().navigate(directions)
     }
 

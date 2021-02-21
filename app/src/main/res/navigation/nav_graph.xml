@@ -25,14 +25,8 @@
         android:name="com.moisespedro.marveldex.ui.features.characterdetails.CharacterDetailsFragment"
         android:label="CharacterDetailsFragment">
         <argument
-            android:name="heroID"
-            app:argType="integer" />
-        <argument
-            android:name="heroName"
-            app:argType="string" />
-        <argument
-            android:name="heroImageURL"
-            app:argType="string" />
+            android:name="heroDetail"
+            app:argType="com.moisespedro.marveldex.data.model.HeroDetail" />
     </fragment>
 
 </navigation>

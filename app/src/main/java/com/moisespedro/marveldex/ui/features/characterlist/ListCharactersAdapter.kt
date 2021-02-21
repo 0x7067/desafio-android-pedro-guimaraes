@@ -9,11 +9,10 @@ import com.moisespedro.marveldex.R
 import com.moisespedro.marveldex.data.heroes.MarvelHero
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_character.view.*
-import kotlin.reflect.KFunction3
+import kotlin.reflect.KFunction4
 
-class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, private val itemClick: KFunction3<@ParameterName(
-    name = "heroId"
-) Int, @ParameterName(name = "heroName") String, @ParameterName(name = "heroImageURL") String, Unit>
+class ListCharactersAdapter(
+    private val heroList: MutableList<MarvelHero>, private val itemClick: (Int, String, String, String) -> Unit
 ) : RecyclerView.Adapter<ListCharactersAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -34,7 +33,7 @@ class ListCharactersAdapter(private val heroList: MutableList<MarvelHero>, priva
         holder.itemView.characterImage.load(heroUrl)
 
         holder.itemView.setOnClickListener {
-            itemClick(hero.id, hero.name, heroUrl)
+            itemClick(hero.id, hero.name, heroUrl, hero.description)
         }
     }
 
