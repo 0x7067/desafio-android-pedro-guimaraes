@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.moisespedro.marveldex.R
+import kotlinx.android.synthetic.main.character_details_fragment.*
 import kotlinx.android.synthetic.main.item_character.*
 
 class CharacterDetailsFragment : Fragment() {
@@ -31,6 +33,13 @@ class CharacterDetailsFragment : Fragment() {
         characterName.text = args.heroDetail.name
         characterImage.load(args.heroDetail.imageUrl)
         renderCharacterDescription()
+        buttonComic.setOnClickListener {
+            val directions =
+                CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToHeroMostExpensiveComicFragment(
+                    args.heroDetail.id
+                )
+            findNavController().navigate(directions)
+        }
     }
 
     private fun renderCharacterDescription() {

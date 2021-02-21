@@ -1,4 +1,4 @@
-package com.moisespedro.marveldex.ui.features.characterdetails
+package com.moisespedro.marveldex.ui.features.heroMostExpensiveComic
 
 import androidx.lifecycle.ViewModel
 import com.moisespedro.marveldex.api.MarvelClientImpl
@@ -6,7 +6,7 @@ import com.moisespedro.marveldex.data.comics.MarvelComicsResponse
 import com.moisespedro.marveldex.data.network.Resource
 import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
 
-class CharacterDetailsViewModel(private val responseHandler: ResponseHandlerImpl, private val marvelClient: MarvelClientImpl) : ViewModel() {
+class HeroMostExpensiveComicViewModel(private val responseHandler: ResponseHandlerImpl, private val marvelClient: MarvelClientImpl) : ViewModel() {
 
     suspend fun fetchHeroComics(heroID: Int): Resource<MarvelComicsResponse> {
         return try {

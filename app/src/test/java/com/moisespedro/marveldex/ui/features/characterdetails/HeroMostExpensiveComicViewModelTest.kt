@@ -6,6 +6,7 @@ import com.moisespedro.marveldex.data.network.Resource
 import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
 import com.moisespedro.marveldex.di.responseHandlerModule
 import com.moisespedro.marveldex.di.viewModelModule
+import com.moisespedro.marveldex.ui.features.heroMostExpensiveComic.HeroMostExpensiveComicViewModel
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -18,7 +19,7 @@ import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
 
-class CharacterDetailsViewModelTest: AutoCloseKoinTest() {
+class HeroMostExpensiveComicViewModelTest: AutoCloseKoinTest() {
 
     private val mockComicsResponse = mock<MarvelComicsResponse>()
 
@@ -26,7 +27,7 @@ class CharacterDetailsViewModelTest: AutoCloseKoinTest() {
 
     private val mockComicResponseResourceError = mock<Resource<MarvelComicsResponse>>()
 
-    private val characterDetailsViewModel: CharacterDetailsViewModel by inject()
+    private val heroMostExpensiveComicViewModel: HeroMostExpensiveComicViewModel by inject()
 
     private val responseHandler: ResponseHandlerImpl by inject()
 
@@ -63,7 +64,7 @@ class CharacterDetailsViewModelTest: AutoCloseKoinTest() {
             val heroId = 35224
 
             // when
-            characterDetailsViewModel.fetchHeroComics(heroId)
+            heroMostExpensiveComicViewModel.fetchHeroComics(heroId)
 
             // should
             verify(marvelClient, times(1)).getComicsByHeroId(heroId)
@@ -86,7 +87,7 @@ class CharacterDetailsViewModelTest: AutoCloseKoinTest() {
             }
 
             // when
-            characterDetailsViewModel.fetchHeroComics(heroId)
+            heroMostExpensiveComicViewModel.fetchHeroComics(heroId)
 
             // should
             verify(marvelClient).getComicsByHeroId(heroId)

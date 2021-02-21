@@ -2,4 +2,5 @@
     <string name="app_name">Marvel Dex</string>
     <string name="no_comic_found">Nenhum comic encontrado para esse herói</string>
     <string name="no_description_found">Herói sem descrição</string>
+    <string name="see_most_expensive_comic">Ver comic mais cara</string>
 </resources>

@@ -23,10 +23,28 @@
     <fragment
         android:id="@+id/characterDetailsFragment"
         android:name="com.moisespedro.marveldex.ui.features.characterdetails.CharacterDetailsFragment"
-        android:label="CharacterDetailsFragment">
+        android:label="CharacterDetailsFragment"
+        tools:layout="@layout/character_details_fragment">
         <argument
             android:name="heroDetail"
             app:argType="com.moisespedro.marveldex.data.model.HeroDetail" />
+
+        <action
+            android:id="@+id/action_characterDetailsFragment_to_heroMostExpensiveComicFragment"
+            app:destination="@id/heroMostExpensiveComicFragment"
+            app:enterAnim="@anim/slide_enter"
+            app:exitAnim="@anim/slide_exit"
+            app:popEnterAnim="@anim/slide_pop_enter"
+            app:popExitAnim="@anim/slide_pop_exit"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/heroMostExpensiveComicFragment"
+        android:name="com.moisespedro.marveldex.ui.features.heroMostExpensiveComic.HeroMostExpensiveComicFragment"
+        android:label="HeroMostExpensiveComicFragment">
+        <argument
+            android:name="heroId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

@@ -2,7 +2,7 @@ package com.moisespedro.marveldex.di
 
 import com.moisespedro.marveldex.api.MarvelClientImpl
 import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
-import com.moisespedro.marveldex.ui.features.characterdetails.CharacterDetailsViewModel
+import com.moisespedro.marveldex.ui.features.heroMostExpensiveComic.HeroMostExpensiveComicViewModel
 import com.moisespedro.marveldex.ui.features.characterlist.ListCharactersViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -17,6 +17,9 @@ val viewModelModule = module {
         ListCharactersViewModel(get(), get())
     }
     viewModel {
-        CharacterDetailsViewModel(get(), get())
+        HeroMostExpensiveComicViewModel(
+            get(),
+            get()
+        )
     }
 }
