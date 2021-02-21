@@ -1,9 +1,7 @@
 package com.moisespedro.marveldex.ui.features.characterlist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,19 +21,13 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
+class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
+    CoroutineScope by MainScope() {
 
     private val viewModel: ListCharactersViewModel by viewModel()
 
     private var offset = 20
     private lateinit var adapter: ListCharactersAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.list_characters_fragment, container, false)
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -48,7 +40,12 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
         addScrollListener(linearLayoutManager)
     }
 
-    private fun goToCharacterDetail(heroId: Int, heroName: String, heroImageURL: String, heroDescription: String) {
+    private fun goToCharacterDetail(
+        heroId: Int,
+        heroName: String,
+        heroImageURL: String,
+        heroDescription: String
+    ) {
         val heroDetail = HeroDetail(heroId, heroName, heroImageURL, heroDescription)
         val directions =
             actionListCharactersFragmentToCharacterDetailsFragment(heroDetail)
@@ -64,7 +61,8 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
                     renderCharacterList(linearLayoutManager, heroes)
                 }
                 Status.ERROR -> {
-                    Toast.makeText(requireContext(), heroesResource.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), heroesResource.message, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
             indeterminateBar.visibility = View.GONE

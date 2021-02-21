@@ -1,9 +1,7 @@
 package com.moisespedro.marveldex.ui.features.characterdetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,16 +10,9 @@ import com.moisespedro.marveldex.R
 import kotlinx.android.synthetic.main.character_details_fragment.*
 import kotlinx.android.synthetic.main.item_character.*
 
-class CharacterDetailsFragment : Fragment() {
+class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
 
     private val args: CharacterDetailsFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.character_details_fragment, container, false)
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
