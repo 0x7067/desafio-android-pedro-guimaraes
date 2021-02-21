@@ -41,8 +41,7 @@
             app:layout_constraintTop_toTopOf="@+id/characterImage"
             tools:text="Hulk" />
 
-        <TextView
-            android:visibility="gone"
+        <kr.co.prnd.readmore.ReadMoreTextView
             android:id="@+id/characterDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,10 +49,13 @@
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/characterImage"
-            tools:visibility="visible"
-            tools:text="Rick Jones has been Hulk's best bud since day one, but now he's more than a friend...he's a teammate! Transformed by a Gamma energy explosion, A-Bomb's thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction!" />
+            app:readMoreMaxLine="3"
+            app:readMoreText="Ver mais"
+            tools:text="Rick Jones has been Hulk's best bud since day one, but now he's more than a friend...he's a teammate! Transformed by a Gamma energy explosion, A-Bomb's thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction!"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
