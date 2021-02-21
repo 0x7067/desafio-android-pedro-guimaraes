@@ -13,9 +13,13 @@ class ListCharactersViewModel(
 
     suspend fun fetchMarvelHeroes(offset: Int): Resource<MarvelHeroResponse> {
         return try {
-            responseHandler.handleSuccess(marvelClient.getMarvelHeroes(20, offset))
+            responseHandler.handleSuccess(marvelClient.getMarvelHeroes(PAGE_SIZE, offset))
         } catch (e: Exception) {
             responseHandler.handleException(e)
         }
+    }
+
+    companion object {
+        const val PAGE_SIZE = 20
     }
 }

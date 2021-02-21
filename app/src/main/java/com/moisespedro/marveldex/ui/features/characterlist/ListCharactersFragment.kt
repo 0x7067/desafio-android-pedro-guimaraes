@@ -56,7 +56,7 @@ class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
 
     private fun loadInitialHeroes(linearLayoutManager: LinearLayoutManager) {
         launch {
-            val heroesResource = viewModel.fetchMarvelHeroes(0)
+            val heroesResource = viewModel.fetchMarvelHeroes(INITIAL_PAGE_NUMBER)
             when (heroesResource.status) {
                 Status.SUCCESS -> {
                     val heroes = heroesResource.data!!.heroData.results
@@ -112,5 +112,9 @@ class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
     override fun onDestroy() {
         super.onDestroy()
         cancel()
+    }
+
+    companion object {
+        private const val INITIAL_PAGE_NUMBER = 0
     }
 }
