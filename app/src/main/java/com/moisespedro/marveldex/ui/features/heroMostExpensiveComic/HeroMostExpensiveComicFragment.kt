@@ -8,7 +8,8 @@ import coil.api.load
 import com.moisespedro.marveldex.R
 import com.moisespedro.marveldex.data.comics.MarvelComics
 import com.moisespedro.marveldex.data.network.Status
-import kotlinx.android.synthetic.main.item_comic.*
+import com.moisespedro.marveldex.databinding.HeroMostExpensiveComicFragmentBinding
+import com.moisespedro.marveldex.extensions.viewBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -19,8 +20,9 @@ import java.util.*
 class HeroMostExpensiveComicFragment : Fragment(R.layout.hero_most_expensive_comic_fragment),
     CoroutineScope by MainScope() {
 
-    private val viewModel: HeroMostExpensiveComicViewModel by viewModel()
     private val args: HeroMostExpensiveComicFragmentArgs by navArgs()
+    private val binding by viewBinding(HeroMostExpensiveComicFragmentBinding::bind)
+    private val viewModel: HeroMostExpensiveComicViewModel by viewModel()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -43,10 +45,10 @@ class HeroMostExpensiveComicFragment : Fragment(R.layout.hero_most_expensive_com
     }
 
     private fun renderComic(comic: MarvelComics) {
-        comicTitle.text = comic.title
-        comicDescription.text = comic.description
-        comicImage.load(comic.thumbnail.getUrl())
-        comicValue.text =
+        binding.itemComic.comicTitle.text = comic.title
+        binding.itemComic.comicDescription.text = comic.description
+        binding.itemComic.comicImage.load(comic.thumbnail.getUrl())
+        binding.itemComic.comicValue.text =
             NumberFormat.getCurrencyInstance(Locale.US).format(comic.getComicMostExpensivePrice())
     }
 

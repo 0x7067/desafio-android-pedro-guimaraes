@@ -11,9 +11,10 @@ import com.moisespedro.marveldex.R
 import com.moisespedro.marveldex.data.heroes.MarvelHero
 import com.moisespedro.marveldex.data.model.HeroDetail
 import com.moisespedro.marveldex.data.network.Status
+import com.moisespedro.marveldex.databinding.ListCharactersFragmentBinding
+import com.moisespedro.marveldex.extensions.viewBinding
 import com.moisespedro.marveldex.ui.features.characterlist.ListCharactersFragmentDirections.actionListCharactersFragmentToCharacterDetailsFragment
 import com.moisespedro.marveldex.util.recyclerView.EndlessRecyclerViewScrollListener
-import kotlinx.android.synthetic.main.list_characters_fragment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -24,6 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
     CoroutineScope by MainScope() {
 
+    private val binding by viewBinding(ListCharactersFragmentBinding::bind)
     private val viewModel: ListCharactersViewModel by viewModel()
 
     private var offset = 20
@@ -65,7 +67,7 @@ class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
                         .show()
                 }
             }
-            indeterminateBar.visibility = View.GONE
+            binding.indeterminateBar.visibility = View.GONE
         }
     }
 
@@ -73,8 +75,8 @@ class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
         linearLayoutManager: LinearLayoutManager,
         heroes: List<MarvelHero>
     ) {
-        charactersRecyclerView.layoutManager = linearLayoutManager
-        charactersRecyclerView.adapter = adapter
+        binding.charactersRecyclerView.layoutManager = linearLayoutManager
+        binding.charactersRecyclerView.adapter = adapter
         adapter.setHeroesList(heroes)
     }
 
@@ -90,7 +92,7 @@ class ListCharactersFragment : Fragment(R.layout.list_characters_fragment),
                 }
             }
         }
-        charactersRecyclerView.addOnScrollListener(scrollListener)
+        binding.charactersRecyclerView.addOnScrollListener(scrollListener)
     }
 
     private suspend fun loadMoreHeroes() {

@@ -38,6 +38,9 @@ android {
             buildConfigField "String", "PRIVATE_KEY", "\"42d5f4e02c903e46c2ce90e3684196b25b56aeb7\""
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -67,4 +70,8 @@ dependencies {
     testImplementation "org.koin:koin-test:2.1.3"
     implementation "org.koin:koin-androidx-viewmodel:2.1.3"
     implementation 'kr.co.prnd:readmore-textview:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
 }

@@ -7,12 +7,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.moisespedro.marveldex.R
-import kotlinx.android.synthetic.main.character_details_fragment.*
-import kotlinx.android.synthetic.main.item_character.*
+import com.moisespedro.marveldex.databinding.CharacterDetailsFragmentBinding
+import com.moisespedro.marveldex.extensions.viewBinding
 
 class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
 
     private val args: CharacterDetailsFragmentArgs by navArgs()
+    private val binding by viewBinding(CharacterDetailsFragmentBinding::bind)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -21,10 +22,10 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
     }
 
     private fun renderCharacter() {
-        characterName.text = args.heroDetail.name
-        characterImage.load(args.heroDetail.imageUrl)
+        binding.itemCharacter.characterName.text = args.heroDetail.name
+        binding.itemCharacter.characterImage.load(args.heroDetail.imageUrl)
         renderCharacterDescription()
-        buttonComic.setOnClickListener {
+        binding.buttonComic.setOnClickListener {
             val directions =
                 CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToHeroMostExpensiveComicFragment(
                     args.heroDetail.id
@@ -34,11 +35,11 @@ class CharacterDetailsFragment : Fragment(R.layout.character_details_fragment) {
     }
 
     private fun renderCharacterDescription() {
-        characterDescription.visibility = View.VISIBLE
+        binding.itemCharacter.characterDescription.visibility = View.VISIBLE
         if (args.heroDetail.description.isNotEmpty()) {
-            characterDescription.text = args.heroDetail.description
+            binding.itemCharacter.characterDescription.text = args.heroDetail.description
         } else {
-            characterDescription.text = getString(R.string.no_description_found)
+            binding.itemCharacter.characterDescription.text = getString(R.string.no_description_found)
         }
     }
 }
