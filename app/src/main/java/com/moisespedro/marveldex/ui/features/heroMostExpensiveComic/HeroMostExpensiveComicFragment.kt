@@ -1,6 +1,7 @@
 package com.moisespedro.marveldex.ui.features.heroMostExpensiveComic
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -41,6 +42,7 @@ class HeroMostExpensiveComicFragment : Fragment(R.layout.hero_most_expensive_com
                         .show()
                 }
             }
+            binding.itemComic.indeterminateBar.visibility = View.GONE
         }
     }
 
