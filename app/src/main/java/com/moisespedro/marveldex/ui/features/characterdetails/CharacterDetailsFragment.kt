@@ -21,11 +21,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CharacterDetailsFragment : Fragment(), CoroutineScope by MainScope() {
 
     private val args: CharacterDetailsFragmentArgs by navArgs()
-    private lateinit var viewModel: CharacterDetailsViewModel
+    private val viewModel: CharacterDetailsViewModel by viewModel()
     private lateinit var adapter: CharacterDetailsAdapter
 
     override fun onCreateView(
@@ -37,9 +38,6 @@ class CharacterDetailsFragment : Fragment(), CoroutineScope by MainScope() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CharacterDetailsViewModel::class.java)
-        viewModel.marvelClient = MarvelClientImpl
-        viewModel.responseHandler = ResponseHandlerImpl
 
         renderCharacter()
 

@@ -1,16 +1,24 @@
 package com.moisespedro.marveldex.ui.features.characterdetails
 
-import com.moisespedro.marveldex.api.MarvelClient
+import com.moisespedro.marveldex.api.MarvelClientImpl
 import com.moisespedro.marveldex.data.comics.MarvelComicsResponse
 import com.moisespedro.marveldex.data.network.Resource
-import com.moisespedro.marveldex.data.network.ResponseHandler
+import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
+import com.moisespedro.marveldex.di.responseHandlerModule
+import com.moisespedro.marveldex.di.viewModelModule
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.test.AutoCloseKoinTest
+import org.koin.test.inject
+import org.koin.test.mock.MockProviderRule
+import org.koin.test.mock.declareMock
+import org.mockito.Mockito
 
-class CharacterDetailsViewModelTest {
+class CharacterDetailsViewModelTest: AutoCloseKoinTest() {
 
     private val mockComicsResponse = mock<MarvelComicsResponse>()
 
@@ -18,26 +26,33 @@ class CharacterDetailsViewModelTest {
 
     private val mockComicResponseResourceError = mock<Resource<MarvelComicsResponse>>()
 
-    private val marvelClientMock = mock<MarvelClient> {
-        onBlocking { getComicsByHeroId(any()) } doReturn mockComicsResponse
-    }
+    private val characterDetailsViewModel: CharacterDetailsViewModel by inject()
 
-    private val responseHandlerMock = mock<ResponseHandler> {
-        on { handleSuccess(mockComicsResponse) } doReturn mockComicResponseResourceSuccess
-        on { handleException<MarvelComicsResponse>(any()) } doReturn mockComicResponseResourceError
-    }
+    private val responseHandler: ResponseHandlerImpl by inject()
 
-    private val characterDetailsViewModel = CharacterDetailsViewModel()
+    private val marvelClient: MarvelClientImpl by inject()
+
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
+    }
 
     @Before
-    fun setUp() {
-        characterDetailsViewModel.responseHandler = responseHandlerMock
-        characterDetailsViewModel.marvelClient = marvelClientMock
-    }
+    fun before() {
+        startKoin {
+            modules(viewModelModule, responseHandlerModule)
+        }
 
-    @After
-    fun tearDown() {
-        verifyNoMoreInteractions(marvelClientMock, responseHandlerMock)
+        declareMock<ResponseHandlerImpl> {
+            given(handleSuccess(mockComicsResponse)).will { mockComicResponseResourceSuccess }
+            given(handleException<MarvelComicsResponse>(any())).will { mockComicResponseResourceError }
+        }
+
+        declareMock<MarvelClientImpl> {
+            runBlocking {
+                given(getComicsByHeroId(any())).will { mockComicsResponse }
+            }
+        }
     }
 
     @Test
@@ -51,8 +66,8 @@ class CharacterDetailsViewModelTest {
             characterDetailsViewModel.fetchHeroComics(heroId)
 
             // should
-            verify(marvelClientMock).getComicsByHeroId(heroId)
-            verify(responseHandlerMock).handleSuccess(mockComicsResponse)
+            verify(marvelClient, times(1)).getComicsByHeroId(heroId)
+            verify(responseHandler, times(1)).handleSuccess(mockComicsResponse)
 
             Unit
         }
@@ -66,18 +81,16 @@ class CharacterDetailsViewModelTest {
             val heroId = 35224
             val exception = Exception("")
 
-            marvelClientMock.stub {
-                onBlocking {
-                    getComicsByHeroId(any())
-                } doThrow exception
+            given(marvelClient.getComicsByHeroId(heroId)).willAnswer {
+                throw exception
             }
 
             // when
             characterDetailsViewModel.fetchHeroComics(heroId)
 
             // should
-            verify(marvelClientMock).getComicsByHeroId(heroId)
-            verify(responseHandlerMock).handleException<MarvelComicsResponse>(exception)
+            verify(marvelClient).getComicsByHeroId(heroId)
+            verify(responseHandler).handleException<MarvelComicsResponse>(exception)
 
             Unit
         }

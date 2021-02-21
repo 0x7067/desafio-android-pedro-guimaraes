@@ -7,7 +7,7 @@ interface ResponseHandler {
     fun <T : Any> handleException(e: Exception): Resource<T>
 }
 
-object ResponseHandlerImpl : ResponseHandler {
+class ResponseHandlerImpl : ResponseHandler {
     override fun <T : Any> handleSuccess(data: T): Resource<T> {
         return Resource.success(data)
     }

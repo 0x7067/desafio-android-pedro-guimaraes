@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moisespedro.marveldex.R
-import com.moisespedro.marveldex.api.MarvelClientImpl
 import com.moisespedro.marveldex.data.heroes.MarvelHero
-import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
 import com.moisespedro.marveldex.data.network.Status
 import com.moisespedro.marveldex.ui.features.characterlist.ListCharactersFragmentDirections.actionListCharactersFragmentToCharacterDetailsFragment
 import com.moisespedro.marveldex.util.recyclerView.EndlessRecyclerViewScrollListener
@@ -22,11 +19,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
 
-    private lateinit var viewModel: ListCharactersViewModel
+    private val viewModel: ListCharactersViewModel by viewModel()
+
     private var offset = 20
     private lateinit var adapter: ListCharactersAdapter
 
@@ -39,9 +38,6 @@ class ListCharactersFragment : Fragment(), CoroutineScope by MainScope() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ListCharactersViewModel::class.java)
-        viewModel.marvelClient = MarvelClientImpl
-        viewModel.responseHandler = ResponseHandlerImpl
 
         adapter = ListCharactersAdapter(mutableListOf(), this::goToCharacterDetail)
 

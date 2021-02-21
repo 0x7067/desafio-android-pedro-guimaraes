@@ -1,15 +1,12 @@
 package com.moisespedro.marveldex.ui.features.characterdetails
 
 import androidx.lifecycle.ViewModel
-import com.moisespedro.marveldex.api.MarvelClient
+import com.moisespedro.marveldex.api.MarvelClientImpl
 import com.moisespedro.marveldex.data.comics.MarvelComicsResponse
 import com.moisespedro.marveldex.data.network.Resource
-import com.moisespedro.marveldex.data.network.ResponseHandler
+import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
 
-class CharacterDetailsViewModel() : ViewModel() {
-
-    lateinit var responseHandler: ResponseHandler
-    lateinit var marvelClient: MarvelClient
+class CharacterDetailsViewModel(private val responseHandler: ResponseHandlerImpl, private val marvelClient: MarvelClientImpl) : ViewModel() {
 
     suspend fun fetchHeroComics(heroID: Int): Resource<MarvelComicsResponse> {
         return try {

@@ -17,9 +17,9 @@ interface MarvelClient {
     suspend fun getComicsByHeroId(characterId: Int): MarvelComicsResponse
 }
 
-object MarvelClientImpl : MarvelClient {
+class MarvelClientImpl : MarvelClient {
 
-    private const val baseUrl = "https://gateway.marvel.com"
+    private val baseUrl = "https://gateway.marvel.com"
 
     private fun getMarvelApi(retrofit: Retrofit): MarvelApi {
         return retrofit.create(MarvelApi::class.java)

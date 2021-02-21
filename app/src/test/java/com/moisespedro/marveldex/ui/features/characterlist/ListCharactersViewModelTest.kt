@@ -1,16 +1,28 @@
 package com.moisespedro.marveldex.ui.features.characterlist
 
-import com.moisespedro.marveldex.api.MarvelClient
+import com.moisespedro.marveldex.api.MarvelClientImpl
+import com.moisespedro.marveldex.data.comics.MarvelComicsResponse
 import com.moisespedro.marveldex.data.heroes.MarvelHeroResponse
 import com.moisespedro.marveldex.data.network.Resource
-import com.moisespedro.marveldex.data.network.ResponseHandler
-import com.nhaarman.mockitokotlin2.*
+import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
+import com.moisespedro.marveldex.di.responseHandlerModule
+import com.moisespedro.marveldex.di.viewModelModule
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.given
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.test.AutoCloseKoinTest
+import org.koin.test.inject
+import org.koin.test.mock.MockProviderRule
+import org.koin.test.mock.declareMock
+import org.mockito.Mockito
 
-class ListCharactersViewModelTest() {
+class ListCharactersViewModelTest : AutoCloseKoinTest() {
 
     private val mockHeroResponse = mock<MarvelHeroResponse>()
 
@@ -18,26 +30,33 @@ class ListCharactersViewModelTest() {
 
     private val mockHeroResponseResourceError = mock<Resource<MarvelHeroResponse>>()
 
-    private val marvelClientMock = mock<MarvelClient> {
-        onBlocking { getMarvelHeroes(any(), any()) } doReturn mockHeroResponse
-    }
+    private val responseHandler: ResponseHandlerImpl by inject()
 
-    private val responseHandlerMock = mock<ResponseHandler> {
-        on { handleSuccess(mockHeroResponse) } doReturn mockHeroResponseResourceSuccess
-        on { handleException<MarvelHeroResponse>(any()) } doReturn mockHeroResponseResourceError
-    }
+    private val marvelClient: MarvelClientImpl by inject()
 
-    private val listCharactersViewModel = ListCharactersViewModel()
+    private val listCharactersViewModel: ListCharactersViewModel by inject()
+
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
+    }
 
     @Before
-    fun setup() {
-        listCharactersViewModel.responseHandler = responseHandlerMock
-        listCharactersViewModel.marvelClient = marvelClientMock
-    }
+    fun before() {
+        startKoin {
+            modules(viewModelModule, responseHandlerModule)
+        }
 
-    @After
-    fun tearDown() {
-        verifyNoMoreInteractions(marvelClientMock, responseHandlerMock)
+        declareMock<ResponseHandlerImpl> {
+            given(handleSuccess(mockHeroResponse)).will { mockHeroResponseResourceSuccess }
+            given(handleException<MarvelComicsResponse>(any())).will { mockHeroResponseResourceError }
+        }
+
+        declareMock<MarvelClientImpl> {
+            runBlocking {
+                given(getMarvelHeroes(any(), any())).will { mockHeroResponse }
+            }
+        }
     }
 
     @Test
@@ -51,8 +70,8 @@ class ListCharactersViewModelTest() {
             listCharactersViewModel.fetchMarvelHeroes(offset)
 
             // should
-            verify(marvelClientMock).getMarvelHeroes(20, offset)
-            verify(responseHandlerMock).handleSuccess(mockHeroResponse)
+            verify(marvelClient).getMarvelHeroes(20, offset)
+            verify(responseHandler).handleSuccess(mockHeroResponse)
 
             Unit
         }
@@ -66,17 +85,16 @@ class ListCharactersViewModelTest() {
             val offset = 35
             val exception = Exception("")
 
-            marvelClientMock.stub {
-                onBlocking {
-                    getMarvelHeroes(any(), any()) } doThrow exception
-                }
+            given(marvelClient.getMarvelHeroes(any(), any())).willAnswer {
+                throw exception
+            }
 
             // when
             listCharactersViewModel.fetchMarvelHeroes(offset)
 
             // should
-            verify(marvelClientMock).getMarvelHeroes(20, offset)
-            verify(responseHandlerMock).handleException<MarvelHeroResponse>(exception)
+            verify(marvelClient).getMarvelHeroes(20, offset)
+            verify(responseHandler).handleException<MarvelHeroResponse>(exception)
 
             Unit
         }

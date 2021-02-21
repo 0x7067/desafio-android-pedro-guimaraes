@@ -5,6 +5,7 @@ import com.moisespedro.marveldex.data.heroes.MarvelHeroResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.lang.Exception
 
 interface MarvelApi {
 
