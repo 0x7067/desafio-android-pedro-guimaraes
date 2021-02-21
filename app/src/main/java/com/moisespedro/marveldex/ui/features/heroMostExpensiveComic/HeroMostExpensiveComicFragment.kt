@@ -30,7 +30,8 @@ class HeroMostExpensiveComicFragment : Fragment(R.layout.hero_most_expensive_com
 
             when (comicsResource.status) {
                 Status.SUCCESS -> {
-                    val comicIndex = getMostExpensiveComicIndex(comicsResource.data!!.heroData.results)
+                    val comicIndex =
+                        getMostExpensiveComicIndex(comicsResource.data!!.heroData.results)
                     renderComic(comicsResource.data.heroData.results[comicIndex])
                 }
                 Status.ERROR -> {
@@ -45,7 +46,8 @@ class HeroMostExpensiveComicFragment : Fragment(R.layout.hero_most_expensive_com
         comicTitle.text = comic.title
         comicDescription.text = comic.description
         comicImage.load(comic.thumbnail.getUrl())
-        comicValue.text = NumberFormat.getCurrencyInstance(Locale.US).format(comic.getComicMostExpensivePrice())
+        comicValue.text =
+            NumberFormat.getCurrencyInstance(Locale.US).format(comic.getComicMostExpensivePrice())
     }
 
     private fun getMostExpensiveComicIndex(results: List<MarvelComics>): Int {

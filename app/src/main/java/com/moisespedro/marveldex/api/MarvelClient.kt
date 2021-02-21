@@ -11,7 +11,10 @@ import java.util.concurrent.TimeUnit
 
 interface MarvelClient {
     @Throws(Exception::class)
-    suspend fun getMarvelHeroes(@Query("limit") limit: Int, @Query("offset") offset: Int): MarvelHeroResponse
+    suspend fun getMarvelHeroes(
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
+    ): MarvelHeroResponse
 
     @Throws(Exception::class)
     suspend fun getComicsByHeroId(characterId: Int): MarvelComicsResponse

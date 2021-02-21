@@ -19,7 +19,7 @@ import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
 
-class HeroMostExpensiveComicViewModelTest: AutoCloseKoinTest() {
+class HeroMostExpensiveComicViewModelTest : AutoCloseKoinTest() {
 
     private val mockComicsResponse = mock<MarvelComicsResponse>()
 

@@ -9,10 +9,10 @@ import com.moisespedro.marveldex.R
 import com.moisespedro.marveldex.data.heroes.MarvelHero
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_character.view.*
-import kotlin.reflect.KFunction4
 
 class ListCharactersAdapter(
-    private val heroList: MutableList<MarvelHero>, private val itemClick: (Int, String, String, String) -> Unit
+    private val heroList: MutableList<MarvelHero>,
+    private val itemClick: (Int, String, String, String) -> Unit
 ) : RecyclerView.Adapter<ListCharactersAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

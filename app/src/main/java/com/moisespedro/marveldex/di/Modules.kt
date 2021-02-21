@@ -2,8 +2,8 @@ package com.moisespedro.marveldex.di
 
 import com.moisespedro.marveldex.api.MarvelClientImpl
 import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
-import com.moisespedro.marveldex.ui.features.heroMostExpensiveComic.HeroMostExpensiveComicViewModel
 import com.moisespedro.marveldex.ui.features.characterlist.ListCharactersViewModel
+import com.moisespedro.marveldex.ui.features.heroMostExpensiveComic.HeroMostExpensiveComicViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

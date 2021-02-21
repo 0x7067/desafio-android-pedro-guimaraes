@@ -1,13 +1,12 @@
 package com.moisespedro.marveldex.data.comics
 
-import android.util.Log
-import com.moisespedro.marveldex.data.MarvelThumbnail
 import com.google.gson.annotations.SerializedName
+import com.moisespedro.marveldex.data.MarvelThumbnail
 
 data class MarvelComics(
     @SerializedName("id") val id: Int,
-    @SerializedName("title") val title: String ?,
-    @SerializedName("description") val description: String ?,
+    @SerializedName("title") val title: String?,
+    @SerializedName("description") val description: String?,
     @SerializedName("thumbnail") val thumbnail: MarvelThumbnail,
     @SerializedName("prices") val prices: List<MarvelComicPrice>
 ) {

@@ -6,7 +6,10 @@ import com.moisespedro.marveldex.data.heroes.MarvelHeroResponse
 import com.moisespedro.marveldex.data.network.Resource
 import com.moisespedro.marveldex.data.network.ResponseHandlerImpl
 
-class ListCharactersViewModel(val responseHandler: ResponseHandlerImpl, val marvelClient: MarvelClientImpl) : ViewModel() {
+class ListCharactersViewModel(
+    private val responseHandler: ResponseHandlerImpl,
+    private val marvelClient: MarvelClientImpl
+) : ViewModel() {
 
     suspend fun fetchMarvelHeroes(offset: Int): Resource<MarvelHeroResponse> {
         return try {

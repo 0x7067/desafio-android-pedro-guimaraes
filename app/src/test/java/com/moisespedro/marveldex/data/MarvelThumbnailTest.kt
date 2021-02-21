@@ -15,7 +15,10 @@ class MarvelThumbnailTest {
         val thumbnail = MarvelThumbnail(path, extension)
 
         // should
-        assertEquals("https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg", thumbnail.getUrl())
+        assertEquals(
+            "https://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg",
+            thumbnail.getUrl()
+        )
     }
 }
 

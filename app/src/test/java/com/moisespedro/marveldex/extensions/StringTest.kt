@@ -1,6 +1,6 @@
 package com.moisespedro.marveldex.extensions
 
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class StringTest {
